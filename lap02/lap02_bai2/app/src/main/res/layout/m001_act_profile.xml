@@ -57,6 +57,7 @@
             android:padding="10dp"
             android:src="@drawable/ic_phone"
             app:tint="@color/indigo"
+            android:id="@+id/your_image_view_id"
 
             tools:ignore="ContentDescription" />
         <LinearLayout

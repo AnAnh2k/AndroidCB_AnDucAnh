@@ -1,4 +1,5 @@
 package com.example.lap02_bai2;
+
 import static com.example.lap02_bai2.R.id.circularProgressBar;
 
 import android.annotation.SuppressLint;
@@ -12,7 +13,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -20,28 +20,38 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.m001_act_profile);
+        setContentView(R.layout.m001_act_profile); // Gán layout cho Activity
+
+        // Bắt sự kiện click cho ImageView
+        ImageView imageView = findViewById(R.id.your_image_view_id); // Khởi tạo ImageView bên trong onCreate
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Chuyển sang ThucHienCuocGoiActivity
+                Intent intent = new Intent(MainActivity.this, ThucHienCuocGoiActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Cấu hình Edge-to-Edge và insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ProgressBar circularProgressBar;
-        circularProgressBar = findViewById(R.id.circularProgressBar);
 
-        // Create an animation that spins the progress bar in a full circle
+        // Xử lý ProgressBar
+        ProgressBar circularProgressBar = findViewById(R.id.circularProgressBar);
         ObjectAnimator progressAnimator = ObjectAnimator.ofFloat(circularProgressBar, "rotation", 0f, 360f);
         progressAnimator.setDuration(5000);
-        // progressAnimator.setRepeatCount(ObjectAnimator.INFINITE);
         progressAnimator.setInterpolator(new LinearInterpolator());
         progressAnimator.start();
     }
 
+    // Hàm thực hiện cuộc gọi
     public void makePhoneCall(View view) {
         String phoneNumber = "tel:0906262004";
         Intent intent = new Intent(Intent.ACTION_DIAL);
